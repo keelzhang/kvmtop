@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>kvmtop by cha87de</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>kvmtop</h1>
+          <h2>Monitor virtual machine experience from outside the on KVM hypervisor level</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/cha87de/kvmtop/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/cha87de/kvmtop/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/cha87de/kvmtop" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="kvmtop-" class="anchor" href="#kvmtop-" aria-hidden="true"><span class="octicon octicon-link"></span></a>kvmtop <a href="https://travis-ci.org/cha87de/kvmtop"><img src="https://travis-ci.org/cha87de/kvmtop.svg" alt="Build Status"></a>
+</h1>
+
+<h2>
+<a id="what-kvmtop-does" class="anchor" href="#what-kvmtop-does" aria-hidden="true"><span class="octicon octicon-link"></span></a>What kvmtop does</h2>
+
+<p>It reads utilisation metrics about virtual machines
+running on the KVM hypervisor from different sources:</p>
+
+<ul>
+<li>the Linux /proc filesystem</li>
+<li>using the virsh [1] tool</li>
+</ul>
+
+<p>Why yet another monitoring tool for virtual machines?</p>
+
+<p>The CPU measurements are read directly from the hypervisors Linux kernel. kvmtop takes
+into account the difference between CPU utilisation inside and outside the virtual machine,
+which will differ e.g. in cases of cpu over provisioning. kvmtop also collects 
+utilisation values of the hypervisor for virtual machines, to measure the overhead needed
+to run a virtual machine.</p>
+
+<p>[1] <a href="http://linux.die.net/man/1/virsh">http://linux.die.net/man/1/virsh</a></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<pre><code>kvmtop --help
+Usage of bin/kvmtop:
+  -batch
+        use simple output e.g. for scripts (default: false)
+  -cpu
+        show cpu (default: true) (default true)
+  -disk
+        show disk  (default: false)
+  -memory
+        show memory (default: false)
+  -network
+        show network (default: false)
+  -qemu-binary-name string
+        binary name of qemu driver. default qemu-kvm (default "qemu-kvm")
+  -r int
+        runs x times then terminates. default -1 (runs forever) (default -1)
+  -s int
+        sleep n seconds between runs. default 1s (default 1)
+  -uuid
+        show uuid  (default: false)
+  -version
+        show version
+</code></pre>
+
+<p>Exemplary output</p>
+
+<pre><code>vmname CpuCS CpuVM CpuPM CpuST CpuIO ram-used ram-total
+vm1    2     5%    5%    0%    1%    1024MB   1024MB
+vm2    4     15%   15%   0%    1%    1024MB   1024MB
+</code></pre>
+
+<h2>
+<a id="setup-developer-workspace-or-compile-kvmtop" class="anchor" href="#setup-developer-workspace-or-compile-kvmtop" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup developer workspace or compile kvmtop</h2>
+
+<pre><code>mkdir kvmtop &amp;&amp; cd kvmtop
+go get "github.com/cha87de/kvmtop"
+go get "github.com/rthornton128/goncurses"
+export GOPATH=`pwd`
+go install github.com/cha87de/kvmtop
+</code></pre>
+
+<p>The <code>go install</code> will produce a binary located at ./bin/kvmtop</p>
+
+<h1>
+<a id="export-schedstat-from-kernel" class="anchor" href="#export-schedstat-from-kernel" aria-hidden="true"><span class="octicon octicon-link"></span></a>Export Schedstat from Kernel</h1>
+
+<p>In CENTOS7 Kernel, the schedstats are not exported any more [1][2].
+One way of installing a kernel, which exports the necessary metrics is to use the ELRepo kernel-ml:</p>
+
+<pre><code># import key
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+# install repository
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+# install most current kernel-ml
+yum --enablerepo=elrepo-kernel install kernel-ml
+</code></pre>
+
+<p>Reboot into newly installed kernel. Then remove the old kernels!</p>
+
+<pre><code>yum list kernel*
+yum erase kernel
+</code></pre>
+
+<p>Take care with diskless nodes. To boot into new kernel, 
+the file pxelinux.cfg/default has to be changed on the storage node.</p>
+
+<p>[1] <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1013225">https://bugzilla.redhat.com/show_bug.cgi?id=1013225</a>
+[2] <a href="https://www.centos.org/forums/viewtopic.php?f=48&amp;t=54049">https://www.centos.org/forums/viewtopic.php?f=48&amp;t=54049</a></p>
+        </section>
+
+        <footer>
+          kvmtop is maintained by <a href="https://github.com/cha87de">cha87de</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
