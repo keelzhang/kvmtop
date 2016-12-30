@@ -1,15 +1,13 @@
 language: go
 go:
-  - '1.5' 
+- '1.5'
 install:
-  - "go get -d -v ./..."
-  - "go build -v"
+- go get -d -v ./...
+- go build -v
 deploy:
-  provider: releases
-  api_key:
-    secure: oBIgBA1opU0pXDL+uKJEYGupkI8Ynoda2jFShZJ267ijzkiWdu3Z0Ee4gO9IP2geBPgDpQbK2IcAqLNJZmRjtrWFH7tBWrJa2uIaYdOZPhQHdKHpYpKkorudOJmew29B9uCRA15sI6F4F9XuN/kj5bkpGNDJzaaZRRDOoJVagD8X0hrVSGtg3u5qT3PvFYpweV7I9RXYVnu1n66/W9Gb+UOefkgWt8CLGN/s7qsHEYNobxR+rT2KH3EQf75vUCM8ocJNRuw9bbpZjyta/RsOlVc/NSY8x7OiK7qWWngdxrwtg3/djxT8SgMsoSVHsp05sm4mWiJRFPBzBNnOfmduFJd1QSI91/+d5mQnIMibzFEU7XSzR0lmYB6xxy/hu6IVBFbdVKS/yaBHLMkuJld+zydXPe/1rOBwNZUVnx5ZVVmWwrASb5NIbec1gdEmcJVF+ctVMm52EQ7WeER2Kq7g4CSkMnE8R1YqGhhQd4vTD2rJjkT9/YjVI/X9agK1jaVdrTaDbkerUKabadjGf20a14GnbWkqiH32t4TF3Gg0kf3r2D3cgpUeBodSA2JZqDTib91I3U2QU6jVQwj0W9X2swxfuEL1pYVgjEDotsadykOYFrvrAzGdcKKOgjO16buBFHDD8kswNapUgioF2824c7kboedRR9MSNI66UteCfEI=
-  skip_cleanup: true
-  file: "kvmtop"
-  on:
-    repo: cha87de/kvmtop
-    tags: true
+  provider: launchpad
+  slug: "~cha87de/kvmtop/trunk"
+  oauth_token:
+    secure: R9tyZZxno7p8K1vy/U5RZxN9MAOIDnjJ/k+Kw9jr3MdgMb83fXo/tPQbFGgPjNq3+oAnVp47fCtZWBVEmhf5K9Ao0NYW1IC4zdvsSym9Gr5oby93LCJ8nCtSqKFI4LrjhEg7f32ZRMIj8XElU978x/ITFHhdo3fmEIS9i3I8J8sTQEfZME5ZszgJdP9lcR5JP3aKLdpX94qtSeHxNUk95nyh8/h8f4GakDcA0tjb7KlPyGNN7Nzqy0poh/XfFX6US2tfX2+1SnkLFLXBTShEBZn1NYDTvQh9yVjIAmqCbh7mTcb3ZkpfUEshRSw/T14jNxzWqtmWLaaSDPIOZTFMvc5gxbV5qP2P0xSLNRFUby+Rxx93oghWfPBu8IkleRj7V7LifYvMLB+Hf0nVNm/RUMdNHYhL0CuTjvX7jCz9nHQd8lFx4yt9DpCzleCISGrDJQBK37F+BGCby4nmiNYodbDuAQdF8PXNCW8obYckIy4CC7MwzFTWpKeYsdzqiz9ZU4ZGVZ/eWXUN0Uo+EI6hQpCKyaOeq+TCISI1D7TX8LMmCm0Qa7H9Wj75DTJH7gc0oit8L5PxMCeov228YTZfIKizVceBKlDfMmgg09915SUURhzmySzrFO/BQai9VBgW6/SF1sXudHffvQ6Ygu9xk5s+1gonYy8bl4Qyg34mh+k=
+  oauth_token_secret:
+    secure: JECTbFDzhc+1sRvLhQCv6lAlmj4NlslrswE/ddjbS+jXhoE1On3ejLOEnVYf5wYW9DbS07M1FLPnE2+6gUDggh4aq3KnxtFkJ0OqJ4F1DRwcZioK4koUhjpT+e2GZokvWrEUvDij7jLJosn1vdbO/Vvmj2/BWR8jGZbbJKr495afurRRaV9H+ERfYQMGED2Uum0yCmZykwJ/blxV8QrtA258Fd7xb264273nCIRKxKi8KrWmqu88tJcl4uD++03qGVAg8Ieoqk7oeMYEJiCasrYOVIhkKabqal6j5bT5Mp7q4m7K+ytZ7zleVFieXbFuexk9Jiv0fPTr1DX3MAkVM1gXnS9ozMEwB2qCb9sfnc6aO4Fqq+r08IDKnrM38RdH80SD7GSG9CjvD9plsgzM8dahHsprjMOe/Slae0d5wNR65zrBXSvEoOyorYcVzd8VrJi3lC+tqrLmc+spsoNmIvc6AaMAe+OTbj3orAe6+81IeE345lBEXfsE8z1QfJ+nMqralCJeukgPnVzxnXEkCOdnsu+9/5OJpTPu8r7Sr8M3at/ncLBVd+LhE360MWwXKPnl5VJmt0/6jvKc/jpYQXq+dG1yq43cq0yPyJ3dNlqHObaLxRbE+/iYlw6YuM3mUDKVO1nJQmhFtsL/XV+pP74FHhUDQbFDgdgaqf4FyqY=
